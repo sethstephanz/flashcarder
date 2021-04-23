@@ -3,15 +3,8 @@ const app = express();
 const path = require("path");
 const mongoose = require("mongoose");
 
-// //date constructor
-// const today = new Date();
-// const dd = String(today.getDate()).padStart(2, "0");
-// const mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
-// const yyyy = today.getFullYear();
-// today = mm + "/" + dd + "/" + yyyy;
-
 mongoose
-  .connect("mongodb://localhost:27017/entries", {
+  .connect("mongodb://localhost:27017/French", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -23,18 +16,35 @@ mongoose
     console.log(err);
   });
 
-const entrySchema = new mongoose.Schema({
-  phrase: String,
-  meaning: String,
+const frenchSchema = new mongoose.Schema({
+  phrase: {
+    type: String,
+    required: true,
+  },
+  meaning: {
+    type: String,
+    required: true,
+  },
   lastReviewed: Date,
 });
 
-const Entry = mongoose.model("Entry", entrySchema);
+const French = mongoose.model("French", frenchSchema);
 
-const bonjour = new Entry({
+const bonjour = new French({
   phrase: "bonjour",
   meaning: "hello",
-  lastReviewed: "2020-4-21",
+  lastReviewed: "2021-4-21",
+});
+
+const acheter = new French({
+  phrase: "acheter",
+  meaning: "to buy",
+  lastReviewed: "2021-4-21",
+});
+
+const homme = new French({
+  phrase: "l‘homme",
+  meaning: "the man",
 });
 
 app.set("view engine", "ejs");
