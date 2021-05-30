@@ -4,11 +4,14 @@
    <main>
      <section id="header">
        <p>
-        Here, you can see all your Stacks (collections of flashcards)! Click on one
-            to travel to that Stack’s dashboard!
+        Here, you can see all your Stacks (collections of flashcards)! Click on one to travel to that Stack’s dashboard!
        </p>
      </section>
-     <section class='cardDisplay' id="stackDisplay">Stacks display here</section>
+     <section class='cardDisplay' id="stackDisplay">
+      <% for (let frenches of French) { %>
+        <li><%= French.name %></li>
+        <% } %>
+     </section>
    </main>
 <%- include('partials/bootstrapScript') %>
  </body>

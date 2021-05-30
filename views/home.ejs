@@ -1,17 +1,26 @@
+<link href="/boxStyle.css" rel="stylesheet" type="text/css">
  <%- include('partials/head') %>
  <body>
 <%- include('partials/navbar') %>
     <main>
       <section id="header">
         <p>
-          Welcome to Flashcarder! Here, you can review words and phrases and
-          edit your cardstack to optimize your learning!
+          Welcome to Flashcarder! Here, you can review material and
+          edit your stacks or view your stats!
         </p>
         <p>
-          Need Review:
+          Needs Review:
         </p>
+          <% for (let x of arr) { %>
+            <div>
+              <%= x %>
+            </div>
+          <% } %>
       </section>
-      <section id="cardDisplay">Card Will Display Here</section>
+      <section id="cardDisplay">
+        <div class="box">French</div>
+        <div class="box">German</div>
+      </section>
     </main>
 <%- include('partials/bootstrapScript') %>
   </body>

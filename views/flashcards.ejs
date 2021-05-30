@@ -1,0 +1,17 @@
+<link href="/boxStyle.css" rel="stylesheet" type="text/css">
+ <%- include('partials/head') %>
+ <body>
+<%- include('partials/navbar') %>
+    <main>
+      <section id="header">
+          <% for (let card of flashcards) { %>
+            <div>
+              <%= card.phrase %>
+              <%= card.meaning %>
+            </div>
+          <% } %>
+      </section>
+    </main>
+<%- include('partials/bootstrapScript') %>
+  </body>
+</html>

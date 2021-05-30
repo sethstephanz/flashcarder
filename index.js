@@ -16,6 +16,8 @@ mongoose
     console.log(err);
   });
 
+app.use("/", express.static(__dirname + "/public"));
+
 const frenchSchema = new mongoose.Schema({
   phrase: {
     type: String,
@@ -50,14 +52,24 @@ const homme = new French({
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "/views"));
 
-app.use(express.static("public"));
-
 app.get("/", (req, res) => {
-  res.render("home.ejs", { title: "Flashcarder" });
+  res.render("home.ejs", {
+    title: "Flashcarder",
+    words: "banana",
+    arr: [100, 200, 300],
+  });
 });
 
-app.get("/stacks", (req, res) => {
-  res.render("stacks.ejs", { title: "Stacks" });
+app.get("/flashcards", async (req, res) => {
+  let result = await French.find();
+  res.render("flashcards.ejs", { title: "Flashcards", flashcards: result });
+});
+
+app.get("/stacks", async (req, res) => {
+  // res.render("stacks.ejs", { title: "Stacks" });
+  const phrases = await French.find({});
+  console.log(phrases);
+  res.render("stacks/index", { phrases });
 });
 
 app.get("/stats", (req, res) => {
