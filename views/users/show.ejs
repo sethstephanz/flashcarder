@@ -1,0 +1,110 @@
+<!-- layout file -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Welcome back, <%= user.username %>!</title>
+    <style>
+      .maincontainer {
+        position: relative;
+        width: 250px;
+        height: 320px;
+        background: black;
+      }
+      .theCard {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        transform-style: preserve-3d;
+        transition: all, 0.5s ease;
+      }
+      .active {
+        transform: rotateY(180deg);
+      }
+      .front {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        background: #ffc728;
+        color: #333;
+      }
+      .back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        background: #fafafa;
+        color: #333;
+        transform: rotateY(180deg);
+      }
+      .button {
+        background: red;
+        z-index: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ejs -->
+    <h1><%= user.username %></h1>
+    <h2><%= user.email %></h2>
+    <p><%= userId %></p>
+    <% let arr = []; %> <% console.log('arr: ' + arr) %> <% let i = 0; %> <%
+    for(let card of cards) { %> <% if(userId == card.userId) { %> <%
+    arr.push(card) %> <% } %> <% } %> <% console.log('arr: ' + arr) %> <%
+    console.log('first entry: ' + arr[0]) %>
+    <!-- ejs -->
+    <div class="maincontainer">
+      <div id="theCard" class="theCard">
+        <div class="front">
+          <div id="frontContent"><h1><%= arr[i].front %></h1></div>
+          <div>
+            <input id="input" type="text" oninput="defineInputText()" />
+          </div>
+          <div id="checkAnswer">
+            <button onclick="flipCard()">Check Answer</button>
+          </div>
+        </div>
+        <div class="back">
+          <h1 id="backText"><%= arr[i].back %></h1>
+          <button onclick="nextCard()">Next Card</button>
+        </div>
+      </div>
+    </div>
+    <p>file: users/show.ejs</p>
+  </body>
+  <script>
+    let theCard, input, back, front, cardData;
+    let inputText, backText, frontText;
+    window.onload = function () {
+      theCard = document.getElementById("theCard"); //this is null?
+      input = document.getElementById("input"); //this is also null?
+      backText = document.getElementById("backText");
+      frontText = document.getElementById("frontText");
+      inputText = input.innerText;
+      backText = backText.innerText;
+      frontText = front.innerText;
+    };
+    function defineInputText() {
+      inputText = input.value;
+    }
+    function flipCard() {
+      if (inputText == backText) {
+        console.log("correct");
+        theCard.style.transform = "rotateY(180deg)";
+      } else {
+        theCard.style.transform = "rotateY(180deg)";
+        console.log("incorrect");
+        console.log("inputText: " + inputText);
+        console.log("backText: " + backText);
+      }
+    }
+    function nextCard() {
+      // document.getElementById('frontContent') = arr[i].front
+      theCard.style.transform = "rotateY(180deg)";
+      console.log("nextCard");
+    }
+    // theCard.addEventListener("click", nextCard());
+  </script>
+</html>

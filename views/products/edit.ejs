@@ -1,0 +1,35 @@
+<head>
+    <title>Edit Card</title>
+  </head>
+<% layout('layouts/boilerplate') %>
+<h1>Edit Card</h1>
+<form action="/cards/<%=card._id%>?_method=PUT" method="POST">
+  <label for="front">Card Front</label>
+  <input
+    type="text"
+    name="front"
+    id="front"
+    placeholder="Card Front"
+    value="<%=card.front%>"
+  />
+  <label for="back">Card Back</label>
+  <input
+    type="text"
+    name="back"
+    id="back"
+    placeholder="Card Back"
+    value="<%= card.back %>"
+  />
+  <label for="card_set">Card Set</label>
+  <input
+    type="text"
+    name="card_set"
+    id="card_set"
+    placeholder="Card Set"
+    value="<%= card.card_set %>"
+  />
+  <button>Submit</button>
+</form>
+
+<a href="/cards/<%=card._id%>">Cancel</a>
+<p>file: edit.ejs</p>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Welcome back, <%= user.username %>!</title>
+  </head>
+  <body>
+    <% layout('layouts/flashcardLayout') %>
+    <input type="text" id="input2" />
+    <button onclick="testCard()">test card</button>
+  </body>
+  <script>
+    let input = document.getElementById("input2");
+
+    // get all cards
+    // display first card: card[i] i == 0
+    cardData = [
+      {
+        cardName: "card one",
+        value: 1,
+      },
+      {
+        cardName: "card two",
+        value: 2,
+      },
+      {
+        cardName: "card three",
+        value: 3,
+      },
+    ];
+    currentCard = 0;
+    function testCard() {
+      const i = input.value;
+      console.warn(cardData[currentCard].cardName);
+      if (cardData[currentCard].value == i) {
+        console.warn("correct");
+        currentCard++;
+      } else {
+        console.warn("not correct");
+      }
+    }
+  </script>
+</html>

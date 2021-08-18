@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Users Index</title>
+  </head>
+  <body>
+    <h1>Admin Panel</h1>
+    <h2>All Users:</h2>
+    <ul>
+      <% for (let user of users) { %>
+      <li><a href="/users/<%= user.id %>"><%= user.username %></a></li>
+      <% } %>
+    </ul>
+    <p>file: users/index.ejs</p>
+  </body>
+</html>

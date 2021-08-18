@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= card.name %></title>
+  </head>
+
+  <body>
+    <h1><%= card.name %></h1>
+    <ul>
+      <li>Price: $<%= card.price%></li>
+      <li>
+        Category:
+        <a href="/products?category=<%= product.category%>"
+          ><%= card.category%></a
+        >
+      </li>
+    </ul>
+    <a href="/home">All Cards</a>
+    <a href="/products/<%=card._id%>/edit">Edit Product</a>
+    <form action="/products/<%=card._id%>?_method=DELETE" method="POST">
+      <button>Delete</button>
+    </form>
+  </body>
+</html>

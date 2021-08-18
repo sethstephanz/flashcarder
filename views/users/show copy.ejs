@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Welcome back, <%= user.username %>!</title>
+  </head>
+  <body>
+    <h1><%= user.username %></h1>
+    <h2><%= user.email %></h2>
+    <p><%= userId %></p>
+    <% for(let card of cards) { %> 
+      <% if(userId == card.userId) { %>
+        <div>
+          <p><b>card front:</b> <%= card.front %></p>
+          <p><b>card back:</b> <%= card.back %></p>
+        </div>
+      <% } %> 
+    <% } %>
+    <p>file: users/show.ejs</p>
+  </body>
+</html>

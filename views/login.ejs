@@ -1,0 +1,18 @@
+<% layout('layouts/boilerplate') %>
+<head>
+  <title>Log In</title>
+</head>
+<h1>Log In!</h1>
+<form action="/login" method="POST">
+  <div>
+    <label for="username">Enter Username:</label>
+    <input type="text" name="username" id="username" />
+  </div>
+  <div>
+    <label for="password">Enter Password:</label>
+    <input type="password" name="password" id="password" />
+  </div>
+  <button>Log In</button>
+</form>
+
+<p>file: login.ejs</p>

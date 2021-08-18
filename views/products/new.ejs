@@ -1,0 +1,24 @@
+<head>
+  <title>Add New Card</title>
+</head>
+<% layout('layouts/boilerplate') %>
+<h1>Add a Card</h1>
+<form action="/cards" method="POST">
+  <label for="front">Front:</label>
+  <input type="text" name="front" id="front" placeholder="Front of card" />
+  <label for="back">Back:</label>
+  <input type="text" name="back" id="back" placeholder="Back of card" />
+  <label for="tags">Tags:</label>
+  <input
+    type="text"
+    name="tags"
+    id="tags"
+    placeholder="Card tags (each separated by a comma)"
+  />
+  <label for="card_set">Card Set: </label>
+  <input type="text" name="card_set" id="card_set" placeholder="card_set" />
+  <button>Submit</button>
+</form>
+<a href="/">Cancel</a>
+
+<p>file: new.ejs</p>

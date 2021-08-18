@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flashcard Program</title>
+    <style>
+      .maincontainer {
+        position: relative;
+        width: 250px;
+        height: 320px;
+        background: black;
+      }
+      .theCard {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        transform-style: preserve-3d;
+        transition: all, 0.5s ease;
+      }
+      /* .theCard:hover {
+        transform: rotateY(180deg);
+      } */
+      .active {
+        transform: rotateY(180deg);
+      }
+      .front {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        background: #ffc728;
+        color: #333;
+      }
+      .back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        background: #fafafa;
+        color: #333;
+        transform: rotateY(180deg);
+      }
+      .button {
+        background: red;
+        z-index: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="maincontainer">
+      <div id="theCard" class="theCard">
+        <div class="front">
+          <div id="frontContent"><h1>Front</h1></div>
+          <div>
+            <input id="input" type="text" oninput="defineInputText()" />
+          </div>
+          <div id="checkAnswer">
+            <button onclick="flipCard()">Check Answer</button>
+          </div>
+        </div>
+        <div class="back">
+          <h1 id="backText">Back</h1>
+          <button onclick="nextCard()">Next Card</button>
+        </div>
+      </div>
+    </div>
+    <%- body %>
+  </body>
+  <script>
+    let theCard, input, back, front, cardData;
+    let inputText, backText, frontText;
+    window.onload = function () {
+      console.warn(cardData);
+      theCard = document.getElementById("theCard"); //this is null rn?
+      input = document.getElementById("input"); //this is also null?
+      back = document.getElementById("back");
+      inputText = input.innerText;
+      backText = back.innerText;
+      frontText = front.innerText;
+
+    };
+    function defineInputText() {
+      inputText = input.value;
+    }
+    function flipCard() {
+      console.log("flipCard firing");
+      console.log("inputText: " + inputText);
+      console.log("backText: " + backText);
+      console.warn(theCard);
+      if (inputText == backText) {
+        theCard.style.transform = "rotateY(180deg)";
+        console.log("correct");
+      }
+      // if(inputText == backText) {
+      //     flip card;
+      //     say 'congrats' on back face;
+      // } else {
+      //     flip card;
+      //     say 'better luck next time' on back face;
+      // }
+      theCard.toggleClass("active");
+    }
+    function nextCard() {
+      // iterate to next card
+    }
+    // thecard.addEventListener("click", flipcard);
+  </script>
+</html>

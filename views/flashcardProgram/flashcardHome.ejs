@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flashcard Program</title>
+    <style>
+      .maincontainer {
+        position: relative;
+        width: 250px;
+        height: 320px;
+        background: green;
+      }
+      .thecard {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        transform-style: preserve-3d;
+        transition: all, 0.5s ease;
+        background: yellow;
+      }
+      .thecard:hover {
+        transform: rotateY(180deg);
+      }
+      .front {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        background: #ffc728;
+        color: #333;
+      }
+      .back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        background: #ffc728;
+        color: #333;
+        transform: rotateY(180deg);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="maincontainer">
+      <div class="thecard">
+        <div class="front"><%= card.front %></div>
+        <div class="back"><%= card.back %></div>
+      </div>
+    </div>
+  </body>
+</html>

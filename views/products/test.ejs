@@ -1,0 +1,15 @@
+<head>
+  <title>All Cards</title>
+</head>
+<% layout('layouts/boilerplate')%>
+<h1>All Cards</h1>
+<ul>
+  <% for(let card of cards) { %>
+  <li>
+    <a href="cards/<%= card._id %> "><%= card.front %> </a>
+  </li>
+  <% }%>
+</ul>
+<a href="/cards/new">Create New Card</a>
+
+<p>file: test.ejs</p>

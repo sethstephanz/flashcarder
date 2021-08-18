@@ -1,0 +1,22 @@
+<% layout('layouts/userLandingBoilerplate') %>
+
+<h1>Welcome Back, <%= user.username %>!</h1>
+<p>
+  Here are your collections, what you went over last time, and what needs
+  revisiting.
+</p>
+
+  <% let userId = user._id %>
+  <ul> 
+    <% for (let card of cards) { %> 
+      
+      <% if (card.userId == userId) { %> 
+        <div class="collection" id=`<% card.userId %>`></div>
+
+
+
+      <% } %> 
+    <% } %> 
+  </ul>
+
+<p>file: users/userLandingPage.ejs</p>
