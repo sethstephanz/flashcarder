@@ -15,7 +15,7 @@ const userRoutes = require("./routes/users");
 const router = require("./routes/users");
 // const flash = require("express-flash");
 //global requires
-
+var cards;
 //models
 const Card = require("./models/card");
 const User = require("./models/user");
@@ -178,19 +178,16 @@ app.post("/login", async (req, res) => {
   const user = await User.findOne({ username });
   console.log("username: " + username);
   console.log("password: " + password);
-
   currentUser.username = username;
   currentUser.password = password;
-
   const validPassword = await bcrypt.compare(password, user.password); //if password and user.password match, validPassword is set to true
 
   if (validPassword) {
     req.session.user_id = user._id;
     isAuthenticated = true;
     userId = user._id;
-    console.log("userId: " + userId);
     res.redirect("/secret");
-  } else res.send("Try Again!");
+  } else res.redirect("/login");
 });
 
 // app.post(
@@ -295,11 +292,17 @@ app.post("/logout", (req, res) => {
 app.get("/users/:id", async (req, res) => {
   const { id } = req.params;
   const user = await User.findById(id);
-  const cards = await Card.find({});
+  cards = await Card.find({});
+  app.locals.cardData;
   if (isAuthenticated) {
-    // res.render("users/show", { user, cards, userId });
-    console.log("userId: " + userId);
-    res.render("users/userLandingPage", { user, cards, userId });
+    if (userId == id) {
+      res.render("users/show", { user, cards, userId });
+    } else {
+      res.redirect("/login");
+    }
+
+    // console.log("userId: " + userId);
+    // res.render("users/userLandingPage", { user, cards, userId });
   } else {
     res.redirect("/login");
   }
@@ -307,9 +310,9 @@ app.get("/users/:id", async (req, res) => {
 
 app.post("/register", checkNotAuthenticated, async (req, res) => {
   try {
-    console.log(req.body.password);
+    // console.log(req.body.password);
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
-    console.log("hashedPassword: " + hashedPassword);
+    // console.log("hashedPassword: " + hashedPassword);
     const newUser = await new User({
       username: req.body.username,
       email: req.body.email,
@@ -317,7 +320,19 @@ app.post("/register", checkNotAuthenticated, async (req, res) => {
     });
     console.log("newUser: " + newUser);
     await newUser.save();
-    res.redirect("/login");
+    // const user = await User.findOne({ username });
+    // currentUser.username = username;
+    // currentUser.password = password;
+
+    req.session.user_id = newUser._id;
+    isAuthenticated = true;
+    userId = newUser._id;
+    const { username, password } = req.body;
+
+    const validPassword = await bcrypt.compare(password, user.password);
+
+    console.log(`/users/${newUser._id}`);
+    res.redirect(`/users/${newUser._id}`);
   } catch {
     res.redirect("/register");
   }

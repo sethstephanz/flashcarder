@@ -6,42 +6,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Welcome back, <%= user.username %>!</title>
     <style>
-      .maincontainer {
-        position: relative;
-        width: 250px;
-        height: 320px;
-        background: black;
+      body {
+        font-family: sans-serif;
       }
-      .theCard {
-        position: absolute;
+
+      .scene {
+        width: 200px;
+        height: 260px;
+        border: 1px solid #ccc;
+        margin: 40px 0;
+        perspective: 600px;
+      }
+
+      .card {
         width: 100%;
         height: 100%;
+        transition: transform 1s;
         transform-style: preserve-3d;
-        transition: all, 0.5s ease;
+        cursor: pointer;
+        position: relative;
       }
-      .active {
+
+      .card.is-flipped {
         transform: rotateY(180deg);
       }
-      .front {
+
+      .card__face {
         position: absolute;
         width: 100%;
         height: 100%;
+        line-height: 260px;
+        color: white;
+        text-align: center;
+        font-weight: bold;
+        font-size: 40px;
+        -webkit-backface-visibility: hidden;
         backface-visibility: hidden;
-        background: #ffc728;
-        color: #333;
       }
-      .back {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        backface-visibility: hidden;
-        background: #fafafa;
-        color: #333;
-        transform: rotateY(180deg);
-      }
-      .button {
+
+      .card__face--front {
         background: red;
-        z-index: 0;
+      }
+
+      .card__face--back {
+        background: blue;
+        transform: rotateY(180deg);
       }
     </style>
   </head>
@@ -54,57 +63,26 @@
     for(let card of cards) { %> <% if(userId == card.userId) { %> <%
     arr.push(card) %> <% } %> <% } %> <% console.log('arr: ' + arr) %> <%
     console.log('first entry: ' + arr[0]) %>
-    <!-- ejs -->
-    <div class="maincontainer">
-      <div id="theCard" class="theCard">
-        <div class="front">
-          <div id="frontContent"><h1><%= arr[i].front %></h1></div>
-          <div>
-            <input id="input" type="text" oninput="defineInputText()" />
-          </div>
-          <div id="checkAnswer">
-            <button onclick="flipCard()">Check Answer</button>
+    <div class="scene scene--card">
+      <div class="card">
+        <div class="card__face card__face--front" id="front">
+          <div id="cardFront">
+            <div><%= %></div>
+            <button id="checkWork">Check Work</button>
           </div>
         </div>
-        <div class="back">
-          <h1 id="backText"><%= arr[i].back %></h1>
-          <button onclick="nextCard()">Next Card</button>
+        <div class="card__face card__face--back">
+          <div id="cardBack"></div>
+          <button id="reviewButton">Review</button>
+          <button id="nextButton">Next Card</button>
         </div>
       </div>
     </div>
+    <p>Click card to flip.</p>
+
     <p>file: users/show.ejs</p>
   </body>
   <script>
-    let theCard, input, back, front, cardData;
-    let inputText, backText, frontText;
-    window.onload = function () {
-      theCard = document.getElementById("theCard"); //this is null?
-      input = document.getElementById("input"); //this is also null?
-      backText = document.getElementById("backText");
-      frontText = document.getElementById("frontText");
-      inputText = input.innerText;
-      backText = backText.innerText;
-      frontText = front.innerText;
-    };
-    function defineInputText() {
-      inputText = input.value;
-    }
-    function flipCard() {
-      if (inputText == backText) {
-        console.log("correct");
-        theCard.style.transform = "rotateY(180deg)";
-      } else {
-        theCard.style.transform = "rotateY(180deg)";
-        console.log("incorrect");
-        console.log("inputText: " + inputText);
-        console.log("backText: " + backText);
-      }
-    }
-    function nextCard() {
-      // document.getElementById('frontContent') = arr[i].front
-      theCard.style.transform = "rotateY(180deg)";
-      console.log("nextCard");
-    }
-    // theCard.addEventListener("click", nextCard());
+    console.warn("test", req.app.locals.baseUrl);
   </script>
 </html>

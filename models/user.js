@@ -12,6 +12,11 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
+  isAdministrator: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
 });
 userSchema.plugin(passportLocalMongoose); //adds password, username verification
 
