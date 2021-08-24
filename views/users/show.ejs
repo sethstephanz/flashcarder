@@ -83,6 +83,45 @@
     <p>file: users/show.ejs</p>
   </body>
   <script>
-    console.warn("test", req.app.locals.baseUrl);
+    console.warn("test", cards);
+    // let theCard, input, back, front, cardData;
+    // let inputText, backText, frontText;
+    // let currentCard = 0;
+    // let cards = "<%= cards%>";
+
+    // let card = document.querySelector(".card");
+    // let checkWork = document.getElementById("checkWork");
+    // let reviewButton = document.getElementById("reviewButton");
+    // let cardFront = document.getElementById("cardFront");
+    // let cardBack = document.getElementById("cardBack");
+    // let nextButton = document.getElementById("nextButton");
+    // i = 0;
+
+    // checkWork.addEventListener("click", function () {
+    //   card.classList.toggle("is-flipped");
+    // });
+
+    // reviewButton.addEventListener("click", function () {
+    //   card.classList.toggle("is-flipped");
+    // });
+
+    // function testCard() {
+    //   const i = input.value;
+    //   console.warn(cardData[currentCard].cardName);
+    //   if (cardData[currentCard].value == i) {
+    //     console.warn("correct");
+    //     currentCard++;
+    //   } else {
+    //     console.warn("not correct");
+    //   }
+    // }
+
+    cardFront.innerText = object[i].front;
+    cardBack.innerText = object[i].back;
+
+    nextButton.addEventListener("click", function () {
+      i++;
+    });
+    // theCard.addEventListener("click", nextCard());
   </script>
 </html>
