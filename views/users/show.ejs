@@ -4,20 +4,23 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Welcome back, <%= user.username %>!</title>
     <style>
       .maincontainer {
-        position: relative;
-        width: 250px;
-        height: 320px;
-        background: black;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        padding-top: 5rem;
       }
       .theCard {
         position: absolute;
-        width: 100%;
-        height: 100%;
+        width: 250px;
+        height: 320px;
+        background: black;
+        border-radius: 1rem;
         transform-style: preserve-3d;
         transition: all, 0.5s ease;
+
       }
       .active {
         transform: rotateY(180deg);
@@ -29,15 +32,29 @@
         backface-visibility: hidden;
         background: #ffc728;
         color: #333;
+        border-radius: 1rem;
+        padding: 1rem;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        text-transform: capitalize;
       }
       .back {
         position: absolute;
         width: 100%;
         height: 100%;
         backface-visibility: hidden;
-        background: #fafafa;
+        background: #d6d6d6;
         color: #333;
         transform: rotateY(180deg);
+        border-radius: 1rem;
+        padding: 1rem;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        text-transform: capitalize;
       }
       .button {
         background: red;
@@ -46,19 +63,13 @@
     </style>
   </head>
   <body>
-    <!-- ejs -->
-    <h1><%= user.username %></h1>
-    <h2><%= user.email %></h2>
-    <p><%= userId %></p>
-    <% let arr = []; %> <% console.log('arr: ' + arr) %> <% let i = 0; %> <%
-    for(let card of cards) { %> <% if(userId == card.userId) { %> <%
-    arr.push(card) %> <% } %> <% } %> <% console.log('arr: ' + arr) %> <%
-    console.log('first entry: ' + arr[0]) %>
-    <!-- ejs -->
+    <% layout('layouts/userLandingBoilerplate') %>
     <div class="maincontainer">
       <div id="theCard" class="theCard">
         <div class="front">
-          <div id="frontContent"><h1><%= arr[i].front %></h1></div>
+          <div id="frontContent">
+            <h1></h1>
+          </div>
           <div>
             <input id="input" type="text" oninput="defineInputText()" />
           </div>
@@ -67,14 +78,24 @@
           </div>
         </div>
         <div class="back">
-          <h1 id="backText"><%= arr[i].back %></h1>
+          <h1 id="backText"></h1>
           <button onclick="nextCard()">Next Card</button>
         </div>
       </div>
     </div>
-    <p>file: users/show.ejs</p>
   </body>
   <script>
+    let cardArray = <%- JSON.stringify(cards) %>;
+    let cardFrontText = document.querySelector("#frontContent > h1");
+    let cardBackText = document.querySelector("#backText");
+    let cardFront = document.getElementsByClassName("front");
+    let cardBack = document.getElementsByClassName("back");
+    let cardCounter = 0;
+    // console.warn(cardBack);
+    cardFrontText.innerText = cardArray[cardCounter].front;
+    cardBackText.innerText = cardArray[cardCounter].back;
+
+    
     let theCard, input, back, front, cardData;
     let inputText, backText, frontText;
     window.onload = function () {
@@ -83,17 +104,17 @@
       backText = document.getElementById("backText");
       frontText = document.getElementById("frontText");
       inputText = input.innerText;
-      backText = backText.innerText;
-      frontText = front.innerText;
     };
     function defineInputText() {
       inputText = input.value;
     }
     function flipCard() {
-      if (inputText == backText) {
+      if (inputText == cardArray[cardCounter].back) {
         console.log("correct");
+        cardBack[0].style.backgroundColor = "green"
         theCard.style.transform = "rotateY(180deg)";
       } else {
+        cardBack[0].style.backgroundColor = "red"
         theCard.style.transform = "rotateY(180deg)";
         console.log("incorrect");
         console.log("inputText: " + inputText);
@@ -101,9 +122,20 @@
       }
     }
     function nextCard() {
-      // document.getElementById('frontContent') = arr[i].front
-      theCard.style.transform = "rotateY(180deg)";
-      console.log("nextCard");
+      if (cardArray.length != cardCounter + 1) {
+        cardBack[0].style.backgroundColor = "inherit"
+        input.value = null;
+        cardCounter++
+        setInterval(() => {
+          cardFrontText.innerText = cardArray[cardCounter].front;
+          cardBackText.innerText = cardArray[cardCounter].back;          
+        }, 200);
+        theCard.style.transform = "rotateY(0deg)";
+        console.log("nextCard");
+      } else {
+        console.warn('No more cards to display')
+      }
+
     }
     // theCard.addEventListener("click", nextCard());
   </script>

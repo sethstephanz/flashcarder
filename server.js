@@ -33,6 +33,7 @@ let userId = null;
 let isAdmin = false;
 let currentUser = { username: null, password: null };
 let isAuthenticated = false;
+let isLoggedIn = false;
 //global variables
 
 //mongoose connect
@@ -80,6 +81,7 @@ passport.deserializeUser(User.deserializeUser());
 
 const requireLogin = (req, res, next) => {
   //makes this function modular so can just call requireLogin as callback in other routes
+  console.warn(req.session.user_id)
   if (!req.session.user_id) {
     res.redirect("/login");
   }
@@ -189,7 +191,7 @@ app.post("/login", async (req, res) => {
     isAuthenticated = true;
     userId = user._id;
     console.log("userId: " + userId);
-    res.redirect("/secret");
+    res.redirect("/users/" + userId);
   } else res.send("Try Again!");
 });
 
@@ -283,7 +285,7 @@ function checkNotAuthenticated(req, res, next) {
   next();
 }
 
-app.post("/logout", (req, res) => {
+app.get("/logout", (req, res) => {
   isAuthenticated = false;
   currentUser.username = null;
   currentUser.password = null;
@@ -327,7 +329,17 @@ app.get("/register", checkNotAuthenticated, (req, res) => {
   res.render("register.ejs");
 });
 //passport login stuff
-
 app.listen(3000, () => {
   console.log("APP IS LISTENING ON PORT 3000! (serving from server.js)");
 });
+
+app.get("/users/:id/show", async (req, res) => {
+  const { id } = req.params;
+  const cards = await Card.find({userId: id});
+  if (isAuthenticated) {
+    res.render("users/show", { cards });
+  } else {
+    res.redirect("/login");
+  }
+});
+
