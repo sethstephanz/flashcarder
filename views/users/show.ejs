@@ -16,11 +16,9 @@
         position: absolute;
         width: 250px;
         height: 320px;
-        background: black;
         border-radius: 1rem;
         transform-style: preserve-3d;
         transition: all, 0.5s ease;
-
       }
       .active {
         transform: rotateY(180deg);
@@ -95,7 +93,7 @@
     cardFrontText.innerText = cardArray[cardCounter].front;
     cardBackText.innerText = cardArray[cardCounter].back;
 
-    
+
     let theCard, input, back, front, cardData;
     let inputText, backText, frontText;
     window.onload = function () {
@@ -128,14 +126,13 @@
         cardCounter++
         setInterval(() => {
           cardFrontText.innerText = cardArray[cardCounter].front;
-          cardBackText.innerText = cardArray[cardCounter].back;          
+          cardBackText.innerText = cardArray[cardCounter].back;
         }, 200);
         theCard.style.transform = "rotateY(0deg)";
         console.log("nextCard");
       } else {
         console.warn('No more cards to display')
       }
-
     }
     // theCard.addEventListener("click", nextCard());
   </script>
