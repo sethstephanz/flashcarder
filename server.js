@@ -183,11 +183,17 @@ app.post("/login", async (req, res) => {
   const validPassword = await bcrypt.compare(password, user.password); //if password and user.password match, validPassword is set to true
 
   if (validPassword) {
+    //   req.session.user_id = user._id;
+    //   isAuthenticated = true;
+    //   userId = user._id;
+    //   res.redirect("/secret");
+    // } else res.redirect("/login");
     req.session.user_id = user._id;
     isAuthenticated = true;
     userId = user._id;
-    res.redirect("/secret");
-  } else res.redirect("/login");
+    console.log("userId: " + userId);
+    res.redirect("/users/" + userId);
+  } else res.send("Try Again!");
 });
 
 // app.post(
@@ -292,11 +298,13 @@ app.post("/logout", (req, res) => {
 app.get("/users/:id", async (req, res) => {
   const { id } = req.params;
   const user = await User.findById(id);
-  cards = await Card.find({});
+  const cards = await Card.find({});
+  // const collection = await Card.find({ card_set });
   app.locals.cardData;
   if (isAuthenticated) {
     if (userId == id) {
-      res.render("users/show", { user, cards, userId });
+      // res.render("users/show", { user, cards, userId });
+      res.render("users/userLandingPage", { user, cards, userId });
     } else {
       res.redirect("/login");
     }
@@ -306,6 +314,15 @@ app.get("/users/:id", async (req, res) => {
   } else {
     res.redirect("/login");
   }
+});
+
+app.get("users/:id/collections", async (req, res) => {
+  // const { card_set } = req.params;
+  // const user = await User.findById(id);
+  // collections = await Card.find({});
+  // if (isAuthenticated & (userId == id)) {
+  //   console.log("hello");
+  // }
 });
 
 app.post("/register", checkNotAuthenticated, async (req, res) => {

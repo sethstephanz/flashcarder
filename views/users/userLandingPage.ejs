@@ -7,16 +7,13 @@
 </p>
 
   <% let userId = user._id %>
-  <ul> 
     <% for (let card of cards) { %> 
-      
       <% if (card.userId == userId) { %> 
-        <div class="collection" id=`<% card.userId %>`></div>
-
-
-
+      <ul>
+        <div class="collection" id='<%  %> '>Card</div>
+      </ul>
       <% } %> 
     <% } %> 
-  </ul>
+
 
 <p>file: users/userLandingPage.ejs</p>
