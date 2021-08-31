@@ -9,11 +9,10 @@
 <div>
   <button onclick="navigate('/cards/new')">Make new card</button>
   <!-- <button onclick="navigate('/users')">To All Users</button> -->
-  <button onclick="navigate('<%= user._id %>/show')">Show cards</button>  
+  <button onclick="navigate('<%= user._id %>/show')">Show cards</button>
 </div>
 
-
-  <!-- <% let userId = user._id %>
+<!-- <% let userId = user._id %>
   <ul> 
     <% for (let card of cards) { %> 
       
@@ -30,8 +29,8 @@
 
 <script>
   function navigate(url) {
-    console.warn(url)
-    window.location.href = url
-    console.warn(window.location.href)
+    console.warn(url);
+    window.location.href = url;
+    console.warn(window.location.href);
   }
 </script>
