@@ -1,12 +1,36 @@
 <% layout('layouts/landingBoilerplate') %>
 
-<h1>Welcome to Flashcarder!</h1>
-<img src="../assets/notes-small.jpg" alt="notepads" />
-<p>
-  Here, you can keep track of all your flashcards in convenient, easy-to-use
-  collections, review terms and phrases, and breezily access your usage stats.
-</p>
-<a href="/login">Log In</a><br />
-<a href="/register">Register</a>
+<head>
+  <style>
+    body {
+      align-items: center;
+    }
+    main {
+      max-width: 800px;
+    }
+    h1 {
+      text-align: center;
+    }
+    img {
+      margin-left: auto;
+      margin-right: auto;
+      display: block;
+      padding: 10px 0px 10px;
+    }
+  </style>
+</head>
 
-<p>file: landingPage.ejs</p>
+<main>
+  <h1>Welcome to Flashcarder!</h1>
+  <img src="../assets/notes-small.jpg" alt="notepads" />
+  <p>
+    Here, you can keep track of all your flashcards in convenient, easy-to-use
+    collections, review terms and phrases, and breezily access your usage stats.
+  </p>
+  <div id="buttons">
+    <button><a href="/login">Log In</a></button>
+    <button><a href="/register">Register</a></button>
+  </div>
+
+  <p>file: landingPage.ejs</p>
+</main>

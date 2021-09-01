@@ -286,13 +286,13 @@ function checkNotAuthenticated(req, res, next) {
   next();
 }
 
-app.post("/logout", (req, res) => {
+app.get("/logout", (req, res) => {
   isAuthenticated = false;
   currentUser.username = null;
   currentUser.password = null;
   userId = null;
   req.logOut();
-  res.redirect("/login");
+  res.redirect("/");
 });
 
 app.get("/users/:id", async (req, res) => {

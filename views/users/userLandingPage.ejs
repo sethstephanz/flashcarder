@@ -1,19 +1,42 @@
 <% layout('layouts/userLandingBoilerplate') %>
 
+<head>
+  <style>
+    #cardDisplay {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      max-width: 800px;
+      background: yellow;
+    }
+    body {
+      align-items: center;
+    }
+  </style>
+</head>
+
 <h1>Welcome Back, <%= user.username %>!</h1>
 <p>
   Here are your collections, what you went over last time, and what needs
   revisiting.
 </p>
-
-  <% let userId = user._id %>
-    <% for (let card of cards) { %> 
-      <% if (card.userId == userId) { %> 
+<div id="cardDisplay">
+  <% let userId = user._id %> 
+  <% let arr = []; %> 
+  <% let i = -1; %> 
+  <% for (let card of cards) { %> 
+    <% i++; %> 
+    <% arr.push(card.card_set) %> 
+    <% let unique = [...new Set(arr)]; %>
+    <% console.log('unique: ' + unique) %> 
+    <% if (card.userId == userId ) { %>
+      <% console.log('arr[i]: ' + arr[i]) %> 
       <ul>
-        <div class="collection" id='<%  %> '>Card</div>
+       <button class="collection"><% `${arr[i]}` %> </button>
       </ul>
-      <% } %> 
     <% } %> 
+  <% } %>
 
+</div>
 
 <p>file: users/userLandingPage.ejs</p>
