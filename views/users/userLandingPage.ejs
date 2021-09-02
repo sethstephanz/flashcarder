@@ -20,23 +20,56 @@
   Here are your collections, what you went over last time, and what needs
   revisiting.
 </p>
-<div id="cardDisplay">
-  <% let userId = user._id %> 
-  <% let arr = []; %> 
-  <% let i = -1; %> 
-  <% for (let card of cards) { %> 
-    <% i++; %> 
-    <% arr.push(card.card_set) %> 
-    <% let unique = [...new Set(arr)]; %>
-    <% console.log('unique: ' + unique) %> 
-    <% if (card.userId == userId ) { %>
-      <% console.log('arr[i]: ' + arr[i]) %> 
-      <ul>
-       <button class="collection"><% `${arr[i]}` %> </button>
-      </ul>
-    <% } %> 
-  <% } %>
-
-</div>
+<div id="collections"></div>
 
 <p>file: users/userLandingPage.ejs</p>
+
+<script>
+      let userId = <%- JSON.stringify(user._id) %>; //this works
+      let users = <%- JSON.stringify(user) %>;
+      let cards = <%- JSON.stringify(cards) %>;
+      let collections = document.querySelector('#collections');
+      let button = document.createElement('button');
+      // let button = document.querySelector('#collection');
+      button.innerText = 'hello';
+
+    //   function buttonSelect() {
+    //   for (var i = 0; i < optionText.length; i++) {
+    //     var option = document.createElement("button");
+    //     document.body.appendChild(option);
+    //     option.innerHTML = optionText[i];
+    //   }
+    // }
+      // for (card in cards) {
+      //   console.log('card added!');
+      //   cardDisplay.appendChild(button).classList.add('button');
+      // }
+  let i = -1;
+  let arr = [];
+  for (let card of cards) {
+    i++;
+    arr.push(card.card_set)
+  }
+  let unique = [...new Set(arr)]; // this gets each category (but for all user, currenty)
+  for (let i = 0; i < unique.length; i++) {
+    let button = document.createElement('button');
+    collections.appendChild(button);
+    button.innerHTML = unique[i];
+  }
+</script>
+
+<!-- <% let userId = user._id %> 
+<% let arr = []; %> 
+<% let i = -1; %> 
+<% for (let card of cards) { %> 
+  <% i++; %> 
+  <% arr.push(card.card_set) %> 
+  <% let unique = [...new Set(arr)]; %>
+  <% console.log('unique: ' + unique) %> 
+  <% if (card.userId == userId ) { %>
+    <% console.log('arr[i]: ' + arr[i]) %> 
+    <ul>
+     <button class="collection"></button>
+    </ul>
+  <% } %> 
+<% } %> -->

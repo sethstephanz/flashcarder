@@ -308,7 +308,6 @@ app.get("/users/:id", async (req, res) => {
     } else {
       res.redirect("/login");
     }
-
     // console.log("userId: " + userId);
     // res.render("users/userLandingPage", { user, cards, userId });
   } else {
