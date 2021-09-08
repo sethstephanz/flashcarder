@@ -50,11 +50,18 @@
     i++;
     arr.push(card.card_set)
   }
-  let unique = [...new Set(arr)]; // this gets each category (but for all user, currenty)
+  let unique = [...new Set(arr)]; // this gets each category (but for all users, currenty. want just logged-in user's content to show)
   for (let i = 0; i < unique.length; i++) {
     let button = document.createElement('button');
     collections.appendChild(button);
+    button.setAttribute('onclick', `navigate('${unique[i]}/collections')`)//pass in collection id once you set them up in place of unique[i]
     button.innerHTML = unique[i];
+  }
+
+  function navigate(url) {
+    console.warn(url);
+    window.location.href = url;
+    // console.warn(window.location.href);
   }
 </script>
 

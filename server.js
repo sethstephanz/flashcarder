@@ -298,7 +298,7 @@ app.get("/logout", (req, res) => {
 app.get("/users/:id", async (req, res) => {
   const { id } = req.params;
   const user = await User.findById(id);
-  const cards = await Card.find({});
+  const cards = await Card.find({ userId: id });
   // const collection = await Card.find({ card_set });
   app.locals.cardData;
   if (isAuthenticated) {
@@ -361,4 +361,12 @@ app.get("/register", checkNotAuthenticated, (req, res) => {
 
 app.listen(3000, () => {
   console.log("APP IS LISTENING ON PORT 3000! (serving from server.js)");
+});
+
+app.get("/users/:collection/collections", async (req, res) => {
+  const { collection } = req.params;
+  console.log(collection);
+  const collections = await Card.find({ card_set: collection });
+  console.log(collections);
+  res.render("users/collections", { collections });
 });
