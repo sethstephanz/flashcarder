@@ -12,60 +12,66 @@
     body {
       align-items: center;
     }
+    main {
+      padding: 0.5rem 1rem;
+    }
   </style>
 </head>
 
-<h1>Welcome Back, <%= user.username %>!</h1>
-<p>
-  Here are your collections, what you went over last time, and what needs
-  revisiting.
-</p>
-<div id="collections"></div>
+<main>
+  <h1>Welcome Back, <%= user.username %>!</h1>
+  <p>
+    Here are your collections, what you went over last time, and what needs
+    revisiting.
+  </p>
+  <div id="collections"></div>
+  <br />
+  <a href="/allcards">Edit Cards</a>
 
-<p>file: users/userLandingPage.ejs</p>
+  <!-- <p>file: users/userLandingPage.ejs</p> -->
 
-<script>
-      let userId = <%- JSON.stringify(user._id) %>; //this works
-      let users = <%- JSON.stringify(user) %>;
-      let cards = <%- JSON.stringify(cards) %>;
-      let collections = document.querySelector('#collections');
-      let button = document.createElement('button');
-      // let button = document.querySelector('#collection');
-      button.innerText = 'hello';
+  <script>
+        let userId = <%- JSON.stringify(user._id) %>; //this works
+        let users = <%- JSON.stringify(user) %>;
+        let cards = <%- JSON.stringify(cards) %>;
+        let collections = document.querySelector('#collections');
+        let button = document.createElement('button');
+        // let button = document.querySelector('#collection');
+        button.innerText = 'hello';
 
-    //   function buttonSelect() {
-    //   for (var i = 0; i < optionText.length; i++) {
-    //     var option = document.createElement("button");
-    //     document.body.appendChild(option);
-    //     option.innerHTML = optionText[i];
-    //   }
-    // }
-      // for (card in cards) {
-      //   console.log('card added!');
-      //   cardDisplay.appendChild(button).classList.add('button');
+      //   function buttonSelect() {
+      //   for (var i = 0; i < optionText.length; i++) {
+      //     var option = document.createElement("button");
+      //     document.body.appendChild(option);
+      //     option.innerHTML = optionText[i];
+      //   }
       // }
-  let i = -1;
-  let arr = [];
-  for (let card of cards) {
-    i++;
-    arr.push(card.card_set)
-  }
-  let unique = [...new Set(arr)]; // this gets each category (but for all users, currenty. want just logged-in user's content to show)
-  for (let i = 0; i < unique.length; i++) {
-    let button = document.createElement('button');
-    collections.appendChild(button);
-    button.setAttribute('onclick', `navigate('${unique[i]}/collections')`)//pass in collection id once you set them up in place of unique[i]
-    button.innerHTML = unique[i];
-  }
+        // for (card in cards) {
+        //   console.log('card added!');
+        //   cardDisplay.appendChild(button).classList.add('button');
+        // }
+    let i = -1;
+    let arr = [];
+    for (let card of cards) {
+      i++;
+      arr.push(card.card_set)
+    }
+    let unique = [...new Set(arr)]; // this gets each category (but for all users, currenty. want just logged-in user's content to show)
+    for (let i = 0; i < unique.length; i++) {
+      let button = document.createElement('button');
+      collections.appendChild(button);
+      button.setAttribute('onclick', `navigate('${unique[i]}/collections')`)//pass in collection id once you set them up in place of unique[i]
+      button.innerHTML = unique[i];
+    }
 
-  function navigate(url) {
-    console.warn(url);
-    window.location.href = url;
-    // console.warn(window.location.href);
-  }
-</script>
+    function navigate(url) {
+      console.warn(url);
+      window.location.href = url;
+      // console.warn(window.location.href);
+    }
+  </script>
 
-<!-- <% let userId = user._id %> 
+  <!-- <% let userId = user._id %> 
 <% let arr = []; %> 
 <% let i = -1; %> 
 <% for (let card of cards) { %> 
@@ -80,3 +86,4 @@
     </ul>
   <% } %> 
 <% } %> -->
+</main>

@@ -1,15 +1,62 @@
 <head>
-  <title>All Cards</title>
+  <title>All of Your Cards</title>
+  <style>
+    #showCards {
+      display: flex;
+      flex-direction: row;
+      padding: 1rem;
+    }
+  </style>
 </head>
 <% layout('layouts/boilerplate')%>
-<h1>All Cards</h1>
-<ul>
-  <% for(let card of cards) { %>
-  <li>
-    <a href="cards/<%= card._id %> "><%= card.front %> </a>
-  </li>
-  <% }%>
-</ul>
+<h1>All of Your Cards</h1>
+
+<input
+  type="text"
+  id="myInput"
+  onkeyup="myFunction()"
+  placeholder="Search Cards"
+  title="Type in a name"
+/>
+<div id="showCards">
+  <div id="cardFronts">
+    <ul id="myUL">
+      <% for (let card of cards) { %>
+      <li>
+        <a href="cards/<%= card._id %> "><%= card.front %></a>
+      </li>
+      <% }%>
+    </ul>
+  </div>
+  <div id="cardBacks">
+    <ul id="myUL">
+      <% for (let card of cards) { %>
+      <li>
+        <a href="cards/<%= card._id %> "><%= card.back %></a>
+      </li>
+      <% }%>
+    </ul>
+  </div>
+</div>
 <a href="/cards/new">Create New Card</a>
 
-<p>file: test.ejs</p>
+<!-- <p>file: test.ejs</p> -->
+
+<script>
+  function myFunction() {
+    var input, filter, ul, li, a, i, txtValue;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    ul = document.getElementById("myUL");
+    li = ul.getElementsByTagName("li");
+    for (i = 0; i < li.length; i++) {
+      a = li[i].getElementsByTagName("a")[0];
+      txtValue = a.textContent || a.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        li[i].style.display = "";
+      } else {
+        li[i].style.display = "none";
+      }
+    }
+  }
+</script>

@@ -83,56 +83,66 @@
     </div>
   </body>
   <script>
-    let cardArray = <%- JSON.stringify(collections) %>;
-    let cardFrontText = document.querySelector("#frontContent > h1");
-    let cardBackText = document.querySelector("#backText");
-    let cardFront = document.getElementsByClassName("front");
-    let cardBack = document.getElementsByClassName("back");
-    let nextCardBtn = document.getElementById('nextCardBtn');
-    let cardCounter = 0;
-    // console.warn(cardBack);
-    cardFrontText.innerText = cardArray[cardCounter].front;
-    cardBackText.innerText = cardArray[cardCounter].back;
-    let theCard, input, back, front, cardData;
-    let inputText, backText, frontText;
-    window.onload = function () {
-      theCard = document.getElementById("theCard");
-      input = document.getElementById("input");
-      backText = document.getElementById("backText");
-      frontText = document.getElementById("frontText");
-      inputText = input.innerText;
-    };
-    function defineInputText() {
-      inputText = input.value;
-    }
-    function flipCard() {
-      if (inputText == cardArray[cardCounter].back) {
-        console.log("correct");
-        cardBack[0].style.backgroundColor = "green";
-        theCard.style.transform = "rotateY(180deg)";
-      } else {
-        cardBack[0].style.backgroundColor = "red"
-        theCard.style.transform = "rotateY(180deg)";
-        console.log("incorrect");
-        console.log("inputText: " + inputText);
-        console.log("backText: " + backText);
-      }
-    }
-    function nextCard() {
-      if (cardArray.length != cardCounter + 1) {
-        cardBack[0].style.backgroundColor = "inherit";
-        input.value = null;
-        cardCounter++;
-        setInterval(() => {
-          cardFrontText.innerText = cardArray[cardCounter].front;
-          cardBackText.innerText = cardArray[cardCounter].back;
-        }, 200);
-        theCard.style.transform = "rotateY(0deg)";
-      } else {
-        nextCardBtn.innerText = 'Back to Collections';
-        console.warn('No more cards to display');
-      }
-    }
-    // theCard.addEventListener("click", nextCard());
+        let cardArray = <%- JSON.stringify(collections) %>;
+        let cardFrontText = document.querySelector("#frontContent > h1");
+        let cardBackText = document.querySelector("#backText");
+        let cardFront = document.getElementsByClassName("front");
+        let cardBack = document.getElementsByClassName("back");
+        let nextCardBtn = document.getElementById('nextCardBtn');
+        let backToCollectionsBtn = document.getElementById('backToCollectionsBtn');
+        let cardCounter = 0;
+        // console.warn(cardBack);
+        cardFrontText.innerText = cardArray[cardCounter].front;
+        cardBackText.innerText = cardArray[cardCounter].back;
+        let theCard, input, back, front, cardData;
+        let inputText, backText, frontText;
+        window.onload = function () {
+          theCard = document.getElementById("theCard");
+          input = document.getElementById("input");
+          backText = document.getElementById("backText");
+          frontText = document.getElementById("frontText");
+          inputText = input.innerText;
+        };
+        function defineInputText() {
+          inputText = input.value;
+        }
+        function flipCard() {
+          if (inputText == cardArray[cardCounter].back) {
+            console.log("correct");
+            cardBack[0].style.backgroundColor = "green";
+            theCard.style.transform = "rotateY(180deg)";
+          } else {
+            cardBack[0].style.backgroundColor = "red"
+            theCard.style.transform = "rotateY(180deg)";
+            console.log("incorrect");
+            console.log("inputText: " + inputText);
+            console.log("backText: " + backText);
+          }
+        }
+        function nextCard() {
+          if (cardArray.length != cardCounter + 1) {
+            cardBack[0].style.backgroundColor = "inherit";
+            input.value = null;
+            cardCounter++;
+            setInterval(() => {
+              cardFrontText.innerText = cardArray[cardCounter].front;
+              cardBackText.innerText = cardArray[cardCounter].back;
+            }, 200);
+            theCard.style.transform = "rotateY(0deg)";
+          } else {
+            nextCardBtn.innerText = 'Back to Collections';
+            // console.warn('No more cards to display');
+          }
+        }
+    //     function hideButton() {
+    //   let x = document.getElementById("backToCollectionsBtn");
+    //   if (x.style.display === "none") {
+    //     x.style.display = "block";
+    //   } else {
+    //     x.style.display = "none";
+    //   }
+    // }
+
+        // theCard.addEventListener("click", nextCard());
   </script>
 </html>

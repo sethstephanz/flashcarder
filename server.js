@@ -88,7 +88,7 @@ const requireLogin = (req, res, next) => {
 
 app.get("/", async (req, res) => {
   console.log("Flashcarder connected!");
-  res.render("landingPage");
+  res.render("landingpage");
 });
 
 app.get("/allcards", async (req, res) => {
@@ -101,14 +101,6 @@ app.get("/users", async (req, res) => {
   console.log(users);
   res.render("users/index", { users });
 });
-
-// app.post(
-//   "/register",
-//   passport.authenticate("local", {
-//     successRedirect: "/",
-//     failureRedirect: "/login",
-//   })
-// );
 
 //card stuff
 app.get("/cards/new", async (req, res) => {
