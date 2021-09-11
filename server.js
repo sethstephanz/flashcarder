@@ -96,6 +96,13 @@ app.get("/allcards", async (req, res) => {
   res.render("products/test", { cards });
 });
 
+app.get("/allcards/:id", async (req, res) => {
+  const { id } = req.params;
+  const cards = await Card.find({ userId: id }); //finds all
+  console.log(cards);
+  res.render("products/test", { cards, id });
+});
+
 app.get("/users", async (req, res) => {
   const users = await User.find({}); //should find all users and render them on admin page
   console.log(users);
@@ -123,6 +130,14 @@ app.post("/cards", async (req, res) => {
 });
 
 app.get("/cards/:id", async (req, res) => {
+  const { id } = req.params;
+  const card = await Card.findById(id);
+  console.log(card);
+  res.render("products/testShow", { card });
+  //   res.render("products/show", { card });
+});
+
+app.get("/allcards/card/:id", async (req, res) => {
   const { id } = req.params;
   const card = await Card.findById(id);
   console.log(card);
@@ -361,4 +376,13 @@ app.get("/users/:collection/collections", async (req, res) => {
   const collections = await Card.find({ card_set: collection });
   console.log(collections);
   res.render("users/collections", { collections });
+});
+
+app.get("/allcards/search/:id/:keyword", async (req, res) => {
+  const { id, keyword } = req.params;
+  let regex = new RegExp(keyword, "i");
+  const query = { $or : [ { back: regex }, { front: regex } ] };       
+
+  const searchRes = await Card.find(query);
+  res.json({ data: searchRes });
 });

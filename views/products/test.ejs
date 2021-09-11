@@ -20,19 +20,21 @@
 />
 <div id="showCards">
   <div id="cardFronts">
-    <ul id="myUL">
+    <h2>Card Fronts</h2>
+    <ul id="front">
       <% for (let card of cards) { %>
       <li>
-        <a href="cards/<%= card._id %> "><%= card.front %></a>
+        <a href="card/<%= card._id %> "><%= card.front %></a>
       </li>
       <% }%>
     </ul>
   </div>
   <div id="cardBacks">
-    <ul id="myUL">
+    <h2>Card Backs</h2>
+    <ul id="back">
       <% for (let card of cards) { %>
       <li>
-        <a href="cards/<%= card._id %> "><%= card.back %></a>
+        <a href="card/<%= card._id %> "><%= card.back %></a>
       </li>
       <% }%>
     </ul>
@@ -44,19 +46,68 @@
 
 <script>
   function myFunction() {
+    let cards = <%- JSON.stringify(cards) %>;
     var input, filter, ul, li, a, i, txtValue;
     input = document.getElementById("myInput");
-    filter = input.value.toUpperCase();
-    ul = document.getElementById("myUL");
-    li = ul.getElementsByTagName("li");
-    for (i = 0; i < li.length; i++) {
-      a = li[i].getElementsByTagName("a")[0];
-      txtValue = a.textContent || a.innerText;
-      if (txtValue.toUpperCase().indexOf(filter) > -1) {
-        li[i].style.display = "";
-      } else {
-        li[i].style.display = "none";
-      }
-    }
+    // filter = input.value.toUpperCase();
+    front = document.getElementById("front");
+    back = document.getElementById("back");
+    // li = ul.getElementsByTagName("li");
+    // for (i = 0; i < li.length; i++) {
+    //   a = li[i].getElementsByTagName("a")[0];
+    //   txtValue = a.textContent || a.innerText;
+    //   if (txtValue.toUpperCase().indexOf(filter) > -1) {
+    //     li[i].style.display = "";
+    //   } else {
+    //     li[i].style.display = "none";
+    //   }
+    // }
+    const url = `search/<%= id %>/${input.value}`;
+    console.warn(url);
+    fetch(url)
+      .then((data) => {
+        return data.json();
+      })
+      .then((res) => {
+        console.log(res);
+        front.innerText = '';
+        back.innerText = '';
+        res.data.forEach(element => {
+          console.log(element)
+          var li = document.createElement("li");
+          var a = document.createElement("a");
+          a.setAttribute('href', `card/${element._id}`)
+          a.innerText = element.front
+          li.appendChild(a)
+          front.appendChild(li)
+          var li = document.createElement("li");
+          var a = document.createElement("a");
+          a.setAttribute('href', `card/${element._id}`)
+          a.innerText = element.back
+          li.appendChild(a)
+          back.appendChild(li)
+        });
+      }).
+      catch( error => {
+        front.innerText = ''
+        back.innerText = ''
+        cards.forEach(element => {
+          console.log(element)
+          var li = document.createElement("li");
+          var a = document.createElement("a");
+          a.setAttribute('href', `card/${element._id}`)
+          a.innerText = element.front
+          li.appendChild(a)
+          front.appendChild(li)
+          var li = document.createElement("li");
+          var a = document.createElement("a");
+          a.setAttribute('href', `card/${element._id}`)
+          a.innerText = element.back
+          li.appendChild(a)
+          back.appendChild(li)
+        });
+      });
+
+
   }
 </script>
