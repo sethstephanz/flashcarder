@@ -9,8 +9,10 @@
   <li>Card Set: <%= card.card_set %></li>
 </ul>
 <a href="/cards/<%=card._id%>/edit">Edit</a><br />
-<a href="/allcards">All Cards</a><br />
-<form action="/cards/<%=card._id%>?_method=DELETE" method="POST">
+<!-- <a href="/allcards/">All Cards</a><br /> -->
+<a href="/allcards/<%= userId %>">All Cards</a><br />
+<!--why am i getting different id?-->
+<form action="/cards/<%= card._id%>?_method=DELETE" method="POST">
   <button>Delete</button>
 </form>
-<p>file: testShow.ejs</p>
+<!-- <p>file: testShow.ejs</p> -->

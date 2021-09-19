@@ -31,6 +31,7 @@
   <!-- <p>file: users/userLandingPage.ejs</p> -->
 
   <script>
+        
         let userId = <%- JSON.stringify(user._id) %>; //this works
         let users = <%- JSON.stringify(user) %>;
         let cards = <%- JSON.stringify(cards) %>;
@@ -38,7 +39,6 @@
         let button = document.createElement('button');
         // let button = document.querySelector('#collection');
         button.innerText = 'hello';
-
       //   function buttonSelect() {
       //   for (var i = 0; i < optionText.length; i++) {
       //     var option = document.createElement("button");

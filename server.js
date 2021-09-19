@@ -13,6 +13,7 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const userRoutes = require("./routes/users");
 const router = require("./routes/users");
+
 // const flash = require("express-flash");
 //global requires
 var cards;
@@ -26,6 +27,11 @@ const testRoute = require("./routes/testRoute")(app);
 const collectionsRoute = require("./routes/collections")(app);
 const statsRoute = require("./routes/stats")(app);
 // routes
+
+if (typeof localStorage === "undefined" || localStorage === null) {
+  var LocalStorage = require("node-localstorage").LocalStorage;
+  localStorage = new LocalStorage("./scratch");
+}
 
 //global variables
 let cardData = "test";
@@ -78,6 +84,10 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 //passport serialization and deserialization
 
+function getUserIdFromLocalStorage() {
+  return localStorage.getItem("userI2d");
+}
+
 const requireLogin = (req, res, next) => {
   //makes this function modular so can just call requireLogin as callback in other routes
   if (!req.session.user_id) {
@@ -92,8 +102,9 @@ app.get("/", async (req, res) => {
 });
 
 app.get("/allcards", async (req, res) => {
+  const { id } = req.params;
   const cards = await Card.find({}); //finds all
-  res.render("products/test", { cards });
+  res.render("products/test", { cards, id });
 });
 
 app.get("/allcards/:id", async (req, res) => {
@@ -132,17 +143,23 @@ app.post("/cards", async (req, res) => {
 app.get("/cards/:id", async (req, res) => {
   const { id } = req.params;
   const card = await Card.findById(id);
-  console.log(card);
-  res.render("products/testShow", { card });
+  const userId = getUserIdFromLocalStorage();
+  console.log("userid", userId);
+  res.render("products/testShow", { card, userId });
   //   res.render("products/show", { card });
 });
 
 app.get("/allcards/card/:id", async (req, res) => {
   const { id } = req.params;
   const card = await Card.findById(id);
-  console.log(card);
-  res.render("products/testShow", { card });
+  // console.log(card);
+  const userId = getUserIdFromLocalStorage();
+  res.render("products/testShow", { card, userId });
   //   res.render("products/show", { card });
+  // const { id } = req.params;
+  // const cards = await Card.find({ userId: id }); //finds all
+  // console.log(cards);
+  // res.render("products/test", { cards, id });
 });
 
 app.get("/cards/:id/edit", async (req, res) => {
@@ -171,9 +188,11 @@ app.put("/cards/:id", async (req, res) => {
 });
 
 app.delete("/cards/:id", async (req, res) => {
+  const { username, password } = req.body;
   const { id } = req.params;
+  const user = await User.findOne({ username });
   const deletedCard = await Card.findByIdAndDelete(id);
-  res.redirect("/allcards");
+  res.redirect(`/allcards/${userId}`);
 });
 
 app.get("/login", (req, res) => {
@@ -183,13 +202,15 @@ app.get("/login", (req, res) => {
 app.post("/login", async (req, res) => {
   const { username, password } = req.body;
   const user = await User.findOne({ username });
-  console.log("username: " + username);
-  console.log("password: " + password);
+  // console.log("username: " + username);
+  // console.log("password: " + password);
   currentUser.username = username;
   currentUser.password = password;
   const validPassword = await bcrypt.compare(password, user.password); //if password and user.password match, validPassword is set to true
 
   if (validPassword) {
+    localStorage.setItem("userI2d", user._id);
+    console.log("LocalStorage", localStorage.getItem("userI2d"));
     //   req.session.user_id = user._id;
     //   isAuthenticated = true;
     //   userId = user._id;
@@ -202,34 +223,6 @@ app.post("/login", async (req, res) => {
     res.redirect("/users/" + userId);
   } else res.send("Try Again!");
 });
-
-// app.post(
-//   "/login",
-//   passport.authenticate("local", {
-//     successRedirect: "/",
-//     failureRedirect: "/login",
-//     failureFlash: true,
-//   })
-// );
-
-//bcrypt registration
-// app.post("/register", async (req, res) => {
-//   const { username, email, password } = req.body;
-//   const hash = await bcrypt.hash(password, 12);
-//   const user = new User({
-//     username,
-//     email,
-//     password: hash,
-//   });
-//   await user.save();
-//   req.session.user_id = user._id;
-//   res.redirect("/");
-// });
-
-// app.get("user/:username", (req, res) => {
-//   console.log(":username");
-//   res.render("/views/userBoilerplate");
-// });
 
 app.get("/secret", requireLogin, async (req, res) => {
   const { id } = req.params;
@@ -381,7 +374,7 @@ app.get("/users/:collection/collections", async (req, res) => {
 app.get("/allcards/search/:id/:keyword", async (req, res) => {
   const { id, keyword } = req.params;
   let regex = new RegExp(keyword, "i");
-  const query = { $or : [ { back: regex }, { front: regex } ] };       
+  const query = { $or: [{ back: regex }, { front: regex }] };
 
   const searchRes = await Card.find(query);
   res.json({ data: searchRes });
